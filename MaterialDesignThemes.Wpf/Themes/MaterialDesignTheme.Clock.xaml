@@ -4,7 +4,7 @@
                     xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters">
 
     <converters:ClockLineConverter x:Key="ClockHourLineConverter" DisplayMode="Hours" />
-    <converters:ClockLineConverter x:Key="ClockMinuteLineConverter" DisplayMode="Minutes" />
+    <converters:ClockLineIntervalConverter x:Key="ClockMinuteLineConverter" DisplayMode="Minutes" />
     <converters:NotConverter x:Key="NotConverter" />
 
     <Style x:Key="MaterialDesignClockItemThumb" TargetType="{x:Type Thumb}">
@@ -349,7 +349,14 @@
 											RenderTransformOrigin=".5,.5">
                                 <Path x:Name="MinuteLine" Data="M2.25,95.515 C2.25,96.036356 1.8582492,96.459 1.375,96.459 C0.89175084,96.459 0.5,96.036356 0.5,95.515 C0.5,94.993643 0.89175084,94.571 1.375,94.571 C1.8582492,94.571 2.25,94.993643 2.25,95.515 z M1.375,95.469003 L1.375,0.50000001" Fill="{DynamicResource PrimaryHueMidBrush}" Height="96.959" Canvas.Left="113.625" Stretch="Fill" Stroke="{DynamicResource PrimaryHueMidBrush}" Canvas.Top="19.047" Width="2.75" RenderTransformOrigin="0.5,0.985">
                                     <Path.RenderTransform>
-                                        <RotateTransform Angle="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Time, Converter={StaticResource ClockMinuteLineConverter}}" />
+                                        <RotateTransform >
+                                            <RotateTransform.Angle>
+                                                <MultiBinding Converter="{StaticResource ClockMinuteLineConverter}">
+                                                    <Binding Path="Time" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                    <Binding Path="MinutesInterval" RelativeSource="{RelativeSource TemplatedParent}"></Binding>
+                                                </MultiBinding>
+                                            </RotateTransform.Angle>
+                                        </RotateTransform>
                                     </Path.RenderTransform>
                                 </Path>
                                 <Canvas.RenderTransform>
