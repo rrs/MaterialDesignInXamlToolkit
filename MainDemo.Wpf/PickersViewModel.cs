@@ -15,7 +15,7 @@ namespace MaterialDesignColors.WpfExample
         private DateTime _time;
         private string _validatingTime;
         private DateTime? _futureValidatingDate;
-        private ClockMinutesInterval _minutesInterval = ClockMinutesInterval.Three;
+        private ClockMinutesInterval _minutesInterval = ClockMinutesInterval.One;
 
         public PickersViewModel()
         {
