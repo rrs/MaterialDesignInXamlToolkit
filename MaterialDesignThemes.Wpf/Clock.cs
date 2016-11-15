@@ -366,7 +366,7 @@ namespace MaterialDesignThemes.Wpf
 		}
 
 		private void GenerateButtons(Panel canvas, ICollection<int> range, double radiusRatio, IValueConverter isCheckedConverter, Func<int, string> stylePropertySelector,
-            string format, int rangeMultiplier = 1)
+            string format, int interval = 1)
 		{
             var anglePerItem = 360.0 / range.Count;
 			var radiansPerItem = anglePerItem * (Math.PI / 180);
@@ -389,12 +389,12 @@ namespace MaterialDesignThemes.Wpf
                 button.CentreY = _centreCanvas.Y - adjacent;
 
                 // note i * rangeMultiplier which scales the is checked correctly
-                button.SetBinding(ToggleButton.IsCheckedProperty, GetBinding("Time", converter: isCheckedConverter, converterParameter: i * rangeMultiplier));
+                button.SetBinding(ToggleButton.IsCheckedProperty, GetBinding("Time", converter: isCheckedConverter, converterParameter: i * interval));
 				button.SetBinding(Canvas.LeftProperty, GetBinding("X", button));
 				button.SetBinding(Canvas.TopProperty, GetBinding("Y", button));
 
                 // as above but for the numbers
-                button.Content = (i == 60 / Interval ? 0 : (i == 24 ? 0 : i * rangeMultiplier)).ToString(format);
+                button.Content = (i == 60 / interval ? 0 : (i == 24 ? 0 : i * interval)).ToString(format);
                 canvas.Children.Add(button);
 			}
         }
