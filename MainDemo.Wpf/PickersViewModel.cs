@@ -71,7 +71,7 @@ namespace MaterialDesignColors.WpfExample
             set
             {
                 _minutesInterval = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(MinutesInterval));
             }
         }
 
