@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using MaterialDesignThemes.Wpf;
 
 namespace MaterialDesignColors.WpfExample
 {
@@ -14,6 +15,7 @@ namespace MaterialDesignColors.WpfExample
         private DateTime _time;
         private string _validatingTime;
         private DateTime? _futureValidatingDate;
+        private ClockMinutesInterval _minutesInterval = ClockMinutesInterval.One;
 
         public PickersViewModel()
         {
@@ -57,6 +59,18 @@ namespace MaterialDesignColors.WpfExample
             set
             {
                 _futureValidatingDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public IEnumerable<ClockMinutesInterval> MinutesIntervals => Enum.GetValues(typeof (ClockMinutesInterval)).Cast<ClockMinutesInterval>();
+
+        public ClockMinutesInterval MinutesInterval
+        {
+            get { return _minutesInterval; }
+            set
+            {
+                _minutesInterval = value;
                 OnPropertyChanged();
             }
         }

@@ -91,7 +91,22 @@ namespace MaterialDesignThemes.Wpf
 			set { SetValue(SelectedTimeFormatProperty, value); }
 		}
 
-		public static readonly DependencyProperty IsDropDownOpenProperty = DependencyProperty.Register(
+        public static readonly DependencyProperty MinutesIntervalProperty = DependencyProperty.Register(
+            nameof(MinutesInterval), typeof(ClockMinutesInterval), typeof(TimePicker), new FrameworkPropertyMetadata(ClockMinutesInterval.One, MinutesIntervalPropertyChangedCallback));
+
+        private static void MinutesIntervalPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            var timePicker = (TimePicker)dependencyObject;
+            timePicker._clock.MinutesInterval = (ClockMinutesInterval)dependencyPropertyChangedEventArgs.NewValue;
+        }
+
+        public ClockMinutesInterval MinutesInterval
+        {
+            get { return (ClockMinutesInterval)GetValue(MinutesIntervalProperty); }
+            set { SetValue(MinutesIntervalProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsDropDownOpenProperty = DependencyProperty.Register(
             nameof(IsDropDownOpen), typeof (bool), typeof (TimePicker),
 			new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsDropDownOpenChanged, OnCoerceIsDropDownOpen));
 

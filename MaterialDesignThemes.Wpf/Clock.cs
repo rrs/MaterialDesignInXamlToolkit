@@ -32,7 +32,23 @@ namespace MaterialDesignThemes.Wpf
 		ToMinutesOnly
 	}
 
-	[TemplatePart(Name = HoursCanvasPartName, Type = typeof (Canvas))]
+    public enum ClockMinutesInterval
+    {
+        One = 1,
+        Two = 2,
+        Three = 3,
+        Four = 4,
+        Five = 5,
+        Six = 6,
+        Ten = 10,
+        Twelve = 12,
+        Fifteen = 15,
+        Twenty = 20,
+        Thirty = 30,
+        Sixty = 60
+    }
+
+    [TemplatePart(Name = HoursCanvasPartName, Type = typeof (Canvas))]
     [TemplatePart(Name = MinutesCanvasPartName, Type = typeof(Canvas))]
 	[TemplatePart(Name = MinuteReadOutPartName, Type = typeof(TextBlock))]
 	[TemplatePart(Name = HourReadOutPartName, Type = typeof(TextBlock))]
@@ -150,7 +166,24 @@ namespace MaterialDesignThemes.Wpf
 			set { SetValue(DisplayModeProperty, value); }
 		}
 
-		public static readonly DependencyProperty DisplayAutomationProperty = DependencyProperty.Register(
+        public static readonly DependencyProperty MinutesIntervalProperty = DependencyProperty.Register(
+            nameof(MinutesInterval), typeof(ClockMinutesInterval), typeof(Clock), new FrameworkPropertyMetadata(ClockMinutesInterval.One, MinutesIntervalPropertyChangedCallback));
+
+        // if the inteval changes we need to regenerate the buttons
+        private static void MinutesIntervalPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            ((Clock)dependencyObject).RegenerateMinuteButtons();
+        }
+
+        public ClockMinutesInterval MinutesInterval
+        {
+            get { return (ClockMinutesInterval)GetValue(MinutesIntervalProperty); }
+            set { SetValue(MinutesIntervalProperty, value); }
+        }
+
+        private int Interval => (int)MinutesInterval;
+
+        public static readonly DependencyProperty DisplayAutomationProperty = DependencyProperty.Register(
             nameof(DisplayAutomation), typeof (ClockDisplayAutomation), typeof (Clock), new PropertyMetadata(default(ClockDisplayAutomation)));
 
 		public ClockDisplayAutomation DisplayAutomation
@@ -275,12 +308,54 @@ namespace MaterialDesignThemes.Wpf
 
 	        var minutesCanvas = GetTemplateChild(MinutesCanvasPartName) as Canvas;
 	        if (minutesCanvas != null)
-	            GenerateButtons(minutesCanvas, Enumerable.Range(1, 60).ToList(), ButtonRadiusRatio,
-                    new ClockItemIsCheckedConverter(() => Time, ClockDisplayMode.Minutes, Is24Hours),
-	                i => ((i/5.0)%1) == 0.0 ? "ButtonStyle" : "LesserButtonStyle", "0");
-	    }
+                GenerateMinuteButtons(minutesCanvas);
+        }
 
-	    private void MinuteReadOutPartNameOnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        // clear existing minute buittons and create new ones
+        private void RegenerateMinuteButtons()
+        {
+            var minutesCanvas = GetTemplateChild(MinutesCanvasPartName) as Canvas;
+            if (minutesCanvas == null) return;
+
+            RemoveButtonsFromCanvas(minutesCanvas);
+            GenerateMinuteButtons(minutesCanvas);
+        }
+
+        private void GenerateMinuteButtons(Panel minutesCanvas)
+        {
+            // using interval to dictate the number of buttons, and the buttons styles
+            GenerateButtons(minutesCanvas, Enumerable.Range(1, 60 / Interval).ToList(), ButtonRadiusRatio,
+                new ClockItemIsCheckedConverter(() => Time, ClockDisplayMode.Minutes, Is24Hours),
+                i => ButtonStyleSelector(i * Interval) ? "ButtonStyle" : "LesserButtonStyle", "0", Interval);
+        }
+
+        // preset button intervals for the different intervals
+        private bool ButtonStyleSelector(int i)
+        {
+            switch (MinutesInterval)
+            {
+                case ClockMinutesInterval.One:
+                case ClockMinutesInterval.Five:
+                case ClockMinutesInterval.Fifteen:
+                    return i % 5 == 0;
+                case ClockMinutesInterval.Three:
+                case ClockMinutesInterval.Six:
+                case ClockMinutesInterval.Twelve:
+                    return i % 6 == 0;
+                case ClockMinutesInterval.Two:
+                case ClockMinutesInterval.Ten:
+                case ClockMinutesInterval.Twenty:
+                case ClockMinutesInterval.Thirty:
+                case ClockMinutesInterval.Sixty:
+                    return i % 10 == 0;
+                case ClockMinutesInterval.Four:
+                    return i % 12 == 0;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void MinuteReadOutPartNameOnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
 			SetCurrentValue(Clock.DisplayModeProperty, ClockDisplayMode.Minutes);
 		}
@@ -291,9 +366,9 @@ namespace MaterialDesignThemes.Wpf
 		}
 
 		private void GenerateButtons(Panel canvas, ICollection<int> range, double radiusRatio, IValueConverter isCheckedConverter, Func<int, string> stylePropertySelector,
-            string format)
+            string format, int interval = 1)
 		{
-			var anglePerItem = 360.0 / range.Count;
+            var anglePerItem = 360.0 / range.Count;
 			var radiansPerItem = anglePerItem * (Math.PI / 180);
 
 			//nothing fancy with sizing/measuring...we are demanding a height
@@ -313,15 +388,21 @@ namespace MaterialDesignThemes.Wpf
 			    button.CentreX = _centreCanvas.X + opposite;
                 button.CentreY = _centreCanvas.Y - adjacent;
 
-				button.SetBinding(ToggleButton.IsCheckedProperty, GetBinding("Time", converter: isCheckedConverter, converterParameter: i));
+                // note i * rangeMultiplier which scales the is checked correctly
+                button.SetBinding(ToggleButton.IsCheckedProperty, GetBinding("Time", converter: isCheckedConverter, converterParameter: i * interval));
 				button.SetBinding(Canvas.LeftProperty, GetBinding("X", button));
 				button.SetBinding(Canvas.TopProperty, GetBinding("Y", button));
 
-				button.Content = (i == 60 ? 0 : (i == 24 ? 0 : i)).ToString(format);
-				canvas.Children.Add(button);
+                // as above but for the numbers
+                button.Content = (i == 60 / interval ? 0 : (i == 24 ? 0 : i * interval)).ToString(format);
+                canvas.Children.Add(button);
 			}
         }
-        
+
+        private static void RemoveButtonsFromCanvas(Panel canvas)
+        {
+            canvas.Children.OfType<ButtonBase>().ToList().ForEach(o => canvas.Children.Remove(o));
+        }
 
         private void ClockItemDragCompletedHandler(object sender, DragCompletedEventArgs e)
 		{
@@ -363,23 +444,23 @@ namespace MaterialDesignThemes.Wpf
 		        {
 		            var outerBoundary = (_centreCanvas.X*ButtonRadiusInnerRatio +
 		                                 (_centreCanvas.X*ButtonRadiusRatio - _centreCanvas.X*ButtonRadiusInnerRatio)/2);
-		            var sqrt = Math.Sqrt((_centreCanvas.X - currentDragPosition.X) * (_centreCanvas.X - currentDragPosition.X) + (_centreCanvas.Y - currentDragPosition.Y) * (_centreCanvas.Y - currentDragPosition.Y));
+		            var sqrt = Math.Sqrt((_centreCanvas.X - currentDragPosition.X)*(_centreCanvas.X - currentDragPosition.X) + (_centreCanvas.Y - currentDragPosition.Y)*(_centreCanvas.Y - currentDragPosition.Y));
 		            var localIsPostMerdiem = sqrt > outerBoundary;
 
 		            var hour = (int) Math.Round(6*angle/Math.PI, MidpointRounding.AwayFromZero)%12 + (localIsPostMerdiem ? 12 : 0);
 		            if (hour == 12)
 		                hour = 0;
-                    else if (hour == 0)
-                        hour = 12;
+		            else if (hour == 0)
+		                hour = 12;
 		            time = new DateTime(Time.Year, Time.Month, Time.Day, hour, Time.Minute, Time.Second);
-                }
+		        }
 		        else
 		            time = new DateTime(Time.Year, Time.Month, Time.Day,
 		                (int) Math.Round(6*angle/Math.PI, MidpointRounding.AwayFromZero)%12 + (IsPostMeridiem ? 12 : 0),
 		                Time.Minute, Time.Second);
 		    }
-            else
-                time = new DateTime(Time.Year, Time.Month, Time.Day, Time.Hour, (int)Math.Round(30 * angle / Math.PI, MidpointRounding.AwayFromZero) % 60, Time.Second);
+		    else
+		        time = new DateTime(Time.Year, Time.Month, Time.Day, Time.Hour, (int) Math.Round(Math.Round(30*angle/Math.PI, MidpointRounding.AwayFromZero)/Interval)*Interval%60, Time.Second);
 
             SetCurrentValue(TimeProperty, time);	
         }
