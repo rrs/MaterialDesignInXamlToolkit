@@ -1,21 +1,25 @@
-﻿using MaterialDesignDemo;
+﻿using System.Configuration;
+using MaterialDesignDemo;
 using MaterialDesignDemo.Domain;
 using MaterialDesignThemes.Wpf;
 using MaterialDesignThemes.Wpf.Transitions;
 using System.Windows.Controls;
+using System;
 
 namespace MaterialDesignColors.WpfExample.Domain
 {
     public class MainWindowViewModel
     {
-        public MainWindowViewModel()
+        public MainWindowViewModel(ISnackbarMessageQueue snackbarMessageQueue)
         {
+            if (snackbarMessageQueue == null) throw new ArgumentNullException(nameof(snackbarMessageQueue));
+
             DemoItems = new[]
             {
                 new DemoItem("Home", new Home(),
                     new []
                     {
-                        new DocumentationLink(DocumentationLinkType.Wiki, "https://github.com/ButchersBoy/MaterialDesignInXamlToolkit/wiki", "WIKI"),
+                        new DocumentationLink(DocumentationLinkType.Wiki, $"{ConfigurationManager.AppSettings["GitHub"]}/wiki", "WIKI"),
                         DocumentationLink.DemoPageLink<Home>()
                     }
                 ),
@@ -29,11 +33,12 @@ namespace MaterialDesignColors.WpfExample.Domain
                         DocumentationLink.DemoPageLink<PaletteSelectorViewModel>("Demo View Model"),
                         DocumentationLink.ApiLink<PaletteHelper>()
                     }),
-                                new DemoItem("Buttons & Toggles", new Buttons(),
+                new DemoItem("Buttons & Toggles", new Buttons { DataContext = new ButtonsViewModel() } ,
                     new []
                     {
                         DocumentationLink.WikiLink("Button-Styles", "Buttons"),
-                        DocumentationLink.DemoPageLink<Buttons>(),
+                        DocumentationLink.DemoPageLink<Buttons>("Demo View"),
+                        DocumentationLink.DemoPageLink<ButtonsViewModel>("Demo View Model"),
                         DocumentationLink.StyleLink("Button"),
                         DocumentationLink.StyleLink("CheckBox"),
                         DocumentationLink.StyleLink("PopupBox"),
@@ -56,7 +61,7 @@ namespace MaterialDesignColors.WpfExample.Domain
                 new DemoItem("Pickers", new Pickers { DataContext = new PickersViewModel()},
                     new []
                     {
-                        DocumentationLink.DemoPageLink<TextFields>(),
+                        DocumentationLink.DemoPageLink<Pickers>(),
                         DocumentationLink.StyleLink("Clock"),
                         DocumentationLink.StyleLink("DatePicker"),
                         DocumentationLink.ApiLink<TimePicker>()
@@ -90,7 +95,7 @@ namespace MaterialDesignColors.WpfExample.Domain
                 {
                     VerticalScrollBarVisibilityRequirement = ScrollBarVisibility.Auto
                 },
-                new DemoItem("Icon Pack", new IconPack { DataContext = new IconPackViewModel() },
+                new DemoItem("Icon Pack", new IconPack { DataContext = new IconPackViewModel(snackbarMessageQueue) },
                     new []
                     {
                         DocumentationLink.DemoPageLink<IconPack>("Demo View"),
@@ -107,7 +112,7 @@ namespace MaterialDesignColors.WpfExample.Domain
                     new []
                     {
                         DocumentationLink.DemoPageLink<Lists>("Demo View"),
-                        DocumentationLink.DemoPageLink<ListsAndGridsViewModel>("Demo View Model"),
+                        DocumentationLink.DemoPageLink<ListsAndGridsViewModel>("Demo View Model", "Domain"),
                         DocumentationLink.StyleLink("ListBox"),
                         DocumentationLink.StyleLink("ListView")
                     })
@@ -124,8 +129,8 @@ namespace MaterialDesignColors.WpfExample.Domain
                 new DemoItem("Grids", new Grids { DataContext = new ListsAndGridsViewModel()},
                     new []
                     {
-                        DocumentationLink.DemoPageLink<Lists>("Demo View"),
-                        DocumentationLink.DemoPageLink<ListsAndGridsViewModel>("Demo View Model"),
+                        DocumentationLink.DemoPageLink<Grids>("Demo View"),
+                        DocumentationLink.DemoPageLink<ListsAndGridsViewModel>("Demo View Model", "Domain"),
                         DocumentationLink.StyleLink("DataGrid")
                     }),
                 new DemoItem("Expander", new Expander(),
@@ -137,8 +142,8 @@ namespace MaterialDesignColors.WpfExample.Domain
                 new DemoItem("Group Boxes", new GroupBoxes(),
                     new []
                     {
-                        DocumentationLink.DemoPageLink<Cards>(),
-                        DocumentationLink.StyleLink("Card")
+                        DocumentationLink.DemoPageLink<GroupBoxes>(),
+                        DocumentationLink.StyleLink("GroupBox")
                     }),
                 new DemoItem("Menus & Tool Bars", new MenusAndToolBars(),
                     new []
@@ -158,7 +163,7 @@ namespace MaterialDesignColors.WpfExample.Domain
                     {
                         DocumentationLink.WikiLink("Dialogs", "Dialogs"),
                         DocumentationLink.DemoPageLink<Dialogs>("Demo View"),
-                        DocumentationLink.DemoPageLink<DialogsViewModel>("Demo View Model"),
+                        DocumentationLink.DemoPageLink<DialogsViewModel>("Demo View Model", "Domain"),
                         DocumentationLink.ApiLink<DialogHost>()
                     }),
                 new DemoItem("Drawer", new Drawers(),

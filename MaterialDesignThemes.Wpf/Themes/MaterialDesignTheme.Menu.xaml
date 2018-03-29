@@ -2,6 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf"
                     xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Font.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
 
     <converters:TextFieldHintVisibilityConverter x:Key="StringIsEmptyVisibilityConverter" IsEmptyValue="Collapsed" IsNotEmptyValue="Visible"/>
     <converters:BrushRoundConverter x:Key="BrushRoundConverter"/>
@@ -273,5 +276,19 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="{x:Static wpf:Spelling.SuggestionMenuItemStyleKey}"  TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MaterialDesignMenuItem}">
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Header" Value="{Binding RelativeSource={RelativeSource Self}, Path=CommandParameter}" />
+    </Style>
+
+    <Style x:Key="{x:Static wpf:Spelling.IgnoreAllMenuItemStyleKey}"  TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MaterialDesignMenuItem}">
+        <Setter Property="Header" Value="Ignore All" />
+    </Style>
+
+    <Style x:Key="{x:Static wpf:Spelling.NoSuggestionsMenuItemStyleKey}" TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MaterialDesignMenuItem}">
+        <Setter Property="Header" Value="(no spelling suggestions)" />
+        <Setter Property="IsEnabled" Value="False" />
     </Style>
 </ResourceDictionary>
