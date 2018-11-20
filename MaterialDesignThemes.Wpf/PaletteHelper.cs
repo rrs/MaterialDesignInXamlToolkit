@@ -247,26 +247,39 @@ namespace MaterialDesignThemes.Wpf
         /// <param name="entryName">The entry to replace</param>
         /// <param name="newValue">The new entry value</param>
         /// <param name="parentDictionary">The root dictionary to start searching at. Null means using Application.Current.Resources</param>
-        private static void ReplaceEntry(object entryName, object newValue, ResourceDictionary parentDictionary = null)
-        {            
+        public static void ReplaceEntry(object entryName, object newValue, ResourceDictionary parentDictionary = null)
+        {
             if (parentDictionary == null)
                 parentDictionary = Application.Current.Resources;
-            
+
             if (parentDictionary.Contains(entryName))
             {
                 var brush = parentDictionary[entryName] as SolidColorBrush;
-                if (brush != null && !brush.IsFrozen)
-                {                 
-                    var animation = new ColorAnimation
-                    {
-                        From = ((SolidColorBrush)parentDictionary[entryName]).Color,
+
+                if (brush == null)
+                {
+                    parentDictionary[entryName] = newValue; //Set value normally
+                }
+                else
+                {
+                    var animation = new ColorAnimation {
+                        From = brush.Color,
                         To = ((SolidColorBrush)newValue).Color,
                         Duration = new Duration(TimeSpan.FromMilliseconds(300))
                     };
+
+                    if (brush.IsFrozen)
+                    {
+                        brush = new SolidColorBrush(brush.Color);
+                        animation.Completed += delegate
+                        {
+                            parentDictionary[entryName] = newValue;
+                        };
+                    }
+
                     brush.BeginAnimation(SolidColorBrush.ColorProperty, animation);
+                    parentDictionary[entryName] = brush;
                 }
-                else
-                    parentDictionary[entryName] = newValue; //Set value normally
             }
 
             foreach (var dictionary in parentDictionary.MergedDictionaries)
