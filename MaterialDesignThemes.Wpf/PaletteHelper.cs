@@ -262,7 +262,8 @@ namespace MaterialDesignThemes.Wpf
                 }
                 else
                 {
-                    var animation = new ColorAnimation {
+                    var animation = new ColorAnimation 
+                    {
                         From = brush.Color,
                         To = ((SolidColorBrush)newValue).Color,
                         Duration = new Duration(TimeSpan.FromMilliseconds(300))
