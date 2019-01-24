@@ -3,7 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:MaterialDesignThemes.Wpf"
     xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters"
-    xmlns:controlzEx="clr-namespace:ControlzEx"
     xmlns:transitions="clr-namespace:MaterialDesignThemes.Wpf.Transitions"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
@@ -25,7 +24,6 @@
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.RatingBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TimePicker.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Font.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.SmartHint.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Snackbar.xaml" />
     </ResourceDictionary.MergedDictionaries>
@@ -294,7 +292,7 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="Direction">
                                 <VisualStateGroup.Transitions>
-                                    <VisualTransition From="None" GeneratedDuration="0" To="Ascending">
+                                    <VisualTransition From="None" GeneratedDuration="0" To="Descending">
                                         <VisualTransition.GeneratedEasingFunction>
                                             <CubicEase EasingMode="EaseOut"/>
                                         </VisualTransition.GeneratedEasingFunction>
@@ -303,7 +301,7 @@
                                             <DoubleAnimation Duration="0:0:0.2" To="90" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="path" BeginTime="0:0:0.2"/>
                                         </Storyboard>
                                     </VisualTransition>
-                                    <VisualTransition From="None" GeneratedDuration="0" To="Descending">
+                                    <VisualTransition From="None" GeneratedDuration="0" To="Ascending">
                                         <VisualTransition.GeneratedEasingFunction>
                                             <CubicEase EasingMode="EaseOut"/>
                                         </VisualTransition.GeneratedEasingFunction>
@@ -316,7 +314,7 @@
                                             </DoubleAnimation>
                                         </Storyboard>
                                     </VisualTransition>
-                                    <VisualTransition From="Ascending" GeneratedDuration="0" To="Descending">
+                                    <VisualTransition From="Descending" GeneratedDuration="0" To="Ascending">
                                         <VisualTransition.GeneratedEasingFunction>
                                             <CubicEase EasingMode="EaseOut"/>
                                         </VisualTransition.GeneratedEasingFunction>
@@ -329,7 +327,7 @@
                                             <DoubleAnimation Duration="0:0:0.2" To="-90" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="path" From="90"/>
                                         </Storyboard>
                                     </VisualTransition>
-                                    <VisualTransition From="Ascending" GeneratedDuration="0" To="None">
+                                    <VisualTransition From="Descending" GeneratedDuration="0" To="None">
                                         <VisualTransition.GeneratedEasingFunction>
                                             <CubicEase EasingMode="EaseOut"/>
                                         </VisualTransition.GeneratedEasingFunction>
@@ -342,12 +340,12 @@
                                             </DoubleAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualTransition>
-                                    <VisualTransition From="Descending" GeneratedDuration="0" To="Ascending">
+                                    <VisualTransition From="Ascending" GeneratedDuration="0" To="Descending">
                                         <Storyboard>
                                             <DoubleAnimation Duration="0:0:0.2" To="90" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="path" From="-90"/>
                                         </Storyboard>
                                     </VisualTransition>
-                                    <VisualTransition From="Descending" GeneratedDuration="0" To="None">
+                                    <VisualTransition From="Ascending" GeneratedDuration="0" To="None">
                                         <Storyboard>
                                             <DoubleAnimation Duration="0" To="-90" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="path"/>
                                             <DoubleAnimation Duration="0:0:0.2" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="path"/>
@@ -365,7 +363,7 @@
                                         </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="Ascending">
+                                <VisualState x:Name="Descending">
                                     <Storyboard>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="path">
                                             <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
@@ -375,7 +373,7 @@
                                         </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="Descending">
+                                <VisualState x:Name="Ascending">
                                     <Storyboard>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="path">
                                             <EasingDoubleKeyFrame KeyTime="0" Value="-90"/>
@@ -482,192 +480,6 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MaterialDesignDialogHostPopup" TargetType="{x:Type controlzEx:PopupEx}">
-        <Setter Property="StaysOpen" Value="True" />
-        <Setter Property="AllowsTransparency" Value="True" />
-        <Setter Property="PopupAnimation" Value="None" />
-        <Setter Property="Placement" Value="Center" />
-    </Style>
-    
-    <Style TargetType="{x:Type local:DialogHost}">
-        <Setter Property="DialogMargin" Value="22" />
-        <Setter Property="local:ShadowAssist.ShadowDepth" Value="Depth5" />
-        <Setter Property="PopupStyle" Value="{StaticResource MaterialDesignDialogHostPopup}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="local:DialogHost">
-                    <Grid x:Name="DialogHostRoot" Focusable="False">
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="PopupStates">
-                                <VisualStateGroup.Transitions>
-                                    <VisualTransition From="Closed" To="Open">
-                                        <Storyboard>
-                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="PART_Popup" Storyboard.TargetProperty="IsOpen">
-                                                <DiscreteBooleanKeyFrame Value="True" KeyTime="0" />
-                                            </BooleanAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_ContentCoverGrid" Storyboard.TargetProperty="Opacity">
-                                                <EasingDoubleKeyFrame Value="0" KeyTime="0" />
-                                                <EasingDoubleKeyFrame Value="0.56" KeyTime="0:0:0.3">
-                                                    <EasingDoubleKeyFrame.EasingFunction>
-                                                        <SineEase EasingMode="EaseInOut" />
-                                                    </EasingDoubleKeyFrame.EasingFunction>
-                                                </EasingDoubleKeyFrame>
-                                            </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_PopupContentElement" Storyboard.TargetProperty="Opacity">
-                                                <EasingDoubleKeyFrame Value="0" KeyTime="0" />
-                                                <EasingDoubleKeyFrame Value="1" KeyTime="0:0:0.3">
-                                                    <EasingDoubleKeyFrame.EasingFunction>
-                                                        <SineEase EasingMode="EaseInOut" />
-                                                    </EasingDoubleKeyFrame.EasingFunction>
-                                                </EasingDoubleKeyFrame>
-                                            </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CardScaleTransform" Storyboard.TargetProperty="ScaleX">
-                                                <EasingDoubleKeyFrame Value="0" KeyTime="0" />
-                                                <EasingDoubleKeyFrame Value="1" KeyTime="0:0:0.3">
-                                                    <EasingDoubleKeyFrame.EasingFunction>
-                                                        <SineEase EasingMode="EaseInOut" />
-                                                    </EasingDoubleKeyFrame.EasingFunction>
-                                                </EasingDoubleKeyFrame>
-                                            </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CardScaleTransform" Storyboard.TargetProperty="ScaleY">
-                                                <EasingDoubleKeyFrame Value="0" KeyTime="0" />
-                                                <EasingDoubleKeyFrame Value="1" KeyTime="0:0:0.3">
-                                                    <EasingDoubleKeyFrame.EasingFunction>
-                                                        <SineEase EasingMode="EaseInOut" />
-                                                    </EasingDoubleKeyFrame.EasingFunction>
-                                                </EasingDoubleKeyFrame>
-                                            </DoubleAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualTransition>
-                                    <VisualTransition From="Open" To="Closed">
-                                        <Storyboard>
-                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="PART_Popup" Storyboard.TargetProperty="IsOpen">
-                                                <DiscreteBooleanKeyFrame Value="False" KeyTime="0:0:0.3" />
-                                            </BooleanAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_ContentCoverGrid" Storyboard.TargetProperty="Opacity">
-                                                <EasingDoubleKeyFrame Value="0.56" KeyTime="0" />
-                                                <EasingDoubleKeyFrame Value="0" KeyTime="0:0:0.3">
-                                                    <EasingDoubleKeyFrame.EasingFunction>
-                                                        <SineEase EasingMode="EaseInOut" />
-                                                    </EasingDoubleKeyFrame.EasingFunction>
-                                                </EasingDoubleKeyFrame>
-                                            </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_PopupContentElement" Storyboard.TargetProperty="Opacity">
-                                                <EasingDoubleKeyFrame Value="1" KeyTime="0" />
-                                                <EasingDoubleKeyFrame Value="1" KeyTime="0:0:0.18" />
-                                                <EasingDoubleKeyFrame Value="0" KeyTime="0:0:0.3">
-                                                    <EasingDoubleKeyFrame.EasingFunction>
-                                                        <SineEase EasingMode="EaseInOut" />
-                                                    </EasingDoubleKeyFrame.EasingFunction>
-                                                </EasingDoubleKeyFrame>
-                                            </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CardScaleTransform" Storyboard.TargetProperty="ScaleX">
-                                                <EasingDoubleKeyFrame Value="1" KeyTime="0" />
-                                                <EasingDoubleKeyFrame Value="1" KeyTime="0:0:0.18" />
-                                                <EasingDoubleKeyFrame Value="0.5" KeyTime="0:0:0.3">
-                                                    <EasingDoubleKeyFrame.EasingFunction>
-                                                        <SineEase EasingMode="EaseInOut" />
-                                                    </EasingDoubleKeyFrame.EasingFunction>
-                                                </EasingDoubleKeyFrame>
-                                            </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CardScaleTransform" Storyboard.TargetProperty="ScaleY">
-                                                <EasingDoubleKeyFrame Value="1" KeyTime="0" />
-                                                <EasingDoubleKeyFrame Value="1" KeyTime="0:0:0.18" />
-                                                <EasingDoubleKeyFrame Value="0.5" KeyTime="0:0:0.3">
-                                                    <EasingDoubleKeyFrame.EasingFunction>
-                                                        <SineEase EasingMode="EaseInOut" />
-                                                    </EasingDoubleKeyFrame.EasingFunction>
-                                                </EasingDoubleKeyFrame>
-                                            </DoubleAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualTransition>
-                                </VisualStateGroup.Transitions>
-                                <VisualState x:Name="Open">
-                                    <Storyboard>
-                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="PART_Popup" Storyboard.TargetProperty="IsOpen">
-                                            <DiscreteBooleanKeyFrame Value="True" KeyTime="0" />
-                                        </BooleanAnimationUsingKeyFrames>
-                                        <DoubleAnimation Storyboard.TargetName="PART_ContentCoverGrid" Storyboard.TargetProperty="Opacity"
-                                                         Duration="0"
-                                                         To=".56" />
-                                        <DoubleAnimation Storyboard.TargetName="PART_PopupContentElement" Storyboard.TargetProperty="Opacity"
-                                                         Duration="0"
-                                                         To="1" />
-                                        <DoubleAnimation Storyboard.TargetName="CardScaleTransform" Storyboard.TargetProperty="ScaleX"
-                                                         Duration="0"
-                                                         To="1" />
-                                        <DoubleAnimation Storyboard.TargetName="CardScaleTransform" Storyboard.TargetProperty="ScaleY"
-                                                         Duration="0"
-                                                         To="1" />
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Closed">
-                                    <Storyboard>
-                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="PART_Popup" Storyboard.TargetProperty="IsOpen">
-                                            <DiscreteBooleanKeyFrame Value="False" KeyTime="0:0:0.3" />
-                                        </BooleanAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                        <controlzEx:PopupEx PlacementTarget="{Binding ElementName=DialogHostRoot, Mode=OneWay}"
-                                            x:Name="PART_Popup"
-                                            Style="{TemplateBinding PopupStyle}">
-                            <controlzEx:PopupEx.Resources>
-                                <ResourceDictionary>
-                                    <ResourceDictionary.MergedDictionaries>
-                                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-                                    </ResourceDictionary.MergedDictionaries>
-                                </ResourceDictionary>
-                            </controlzEx:PopupEx.Resources>
-                            <local:Card x:Name="PART_PopupContentElement" 
-                                        Margin="{TemplateBinding DialogMargin}"
-                                        local:ShadowAssist.ShadowDepth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:ShadowAssist.ShadowDepth)}"
-                                        UniformCornerRadius="4"
-                                        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-                                        TextElement.FontWeight="Regular"
-                                        TextElement.FontSize="13"
-                                        TextOptions.TextFormattingMode="Ideal"
-                                        TextOptions.TextRenderingMode="Auto"                  
-                                        FocusManager.IsFocusScope="False"
-                                        Foreground="{DynamicResource MaterialDesignBody}"
-                                        FontFamily="{StaticResource MaterialDesignFont}"
-                                        Focusable="True"
-                                        IsTabStop="False"
-                                        Opacity="0"
-                                        RenderTransformOrigin=".5,.5"
-                                        Content="{TemplateBinding DialogContent}"
-                                        ContentTemplate="{TemplateBinding DialogContentTemplate}"
-                                        ContentTemplateSelector="{TemplateBinding DialogContentTemplateSelector}"
-                                        ContentStringFormat="{TemplateBinding DialogContentStringFormat}">
-                                <local:Card.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform x:Name="CardScaleTransform"
-                                                        ScaleX="0"
-                                                        ScaleY="0" />
-                                    </TransformGroup>
-                                </local:Card.RenderTransform>
-                            </local:Card>
-                        </controlzEx:PopupEx>
-                        <AdornerDecorator>
-                            <ContentPresenter 
-                                    x:Name="ContentPresenter" Opacity="1"                    
-                                    Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" />
-                        </AdornerDecorator>
-                        <Grid x:Name="PART_ContentCoverGrid" Background="{x:Null}" Opacity="0" IsHitTestVisible="False" Focusable="False" />
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsOpen" Value="True">
-                            <Setter TargetName="ContentPresenter" Property="IsEnabled" Value="False" />
-                            <Setter TargetName="PART_ContentCoverGrid" Property="Background" Value="Black" />
-                            <Setter TargetName="PART_ContentCoverGrid" Property="IsHitTestVisible" Value="True" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <SolidColorBrush x:Key="BlackBackground" Color="Black" />
 
     <Style TargetType="{x:Type local:DrawerHost}">
@@ -702,7 +514,7 @@
                                                 </EasingDoubleKeyFrame>
                                             </DoubleAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_ContentCover" 
-                                                                               Storyboard.TargetProperty="Background">
+                                                                           Storyboard.TargetProperty="Background">
                                                 <DiscreteObjectKeyFrame Value="{StaticResource BlackBackground}" KeyTime="0" />
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
@@ -717,6 +529,10 @@
                                                     </EasingDoubleKeyFrame.EasingFunction>
                                                 </EasingDoubleKeyFrame>
                                             </DoubleAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_ContentCover" 
+                                                                           Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame Value="{x:Null}" KeyTime="0:0:0.3" />
+                                            </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualTransition>
                                 </VisualStateGroup.Transitions>
@@ -739,10 +555,14 @@
                                 <VisualState x:Name="AllClosed">
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="PART_ContentCover" Storyboard.TargetProperty="Opacity"
-                                                             To="0" />
+                                                         To="0" />
                                         <BooleanAnimationUsingKeyFrames Storyboard.TargetName="PART_ContentCover" Storyboard.TargetProperty="IsHitTestVisible">
                                             <DiscreteBooleanKeyFrame Value="False" />
                                         </BooleanAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_ContentCover" 
+                                                                       Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame Value="{x:Null}" />
+                                        </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
