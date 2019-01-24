@@ -196,10 +196,7 @@ namespace MaterialDesignThemes.Wpf
             _asyncShowClosingEventHandler = closingEventHandler;
             SetCurrentValue(IsOpenProperty, true);
             
-            object result = await _dialogTaskCompletionSource.Task;
-
-            });
-            var task _dialogTaskCompletionSource.Task.ContinueWith(t => 
+            var task = _dialogTaskCompletionSource.Task.ContinueWith(t => 
             {
                 _asyncShowOpenedEventHandler = null;
                 _asyncShowClosingEventHandler = null;
