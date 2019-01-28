@@ -10,6 +10,7 @@ namespace MaterialDesignColors.WpfExample.Domain
         private readonly IList<int> _longListToTestComboVirtualization;
 
         private string _name;
+        private string _name2;
         private int? _selectedValueOne;
         private string _selectedTextTwo;
 
@@ -28,6 +29,15 @@ namespace MaterialDesignColors.WpfExample.Domain
             {
                 _name = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public string Name2
+        {
+            get { return _name2; }
+            set
+            {
+                this.MutateVerbose(ref _name2, value, RaisePropertyChanged());
             }
         }
 
