@@ -115,7 +115,6 @@
                             <Setter Property="BorderBrush" Value="Transparent" />
                             <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth0" />
                             <Setter Property="materialDesign:ShadowAdornerAssist.ShadowDepth" Value="Depth0" />
-                            <!--<Setter Property="materialDesign:ShadowAssist.ShadowEdges" Value="All" />-->
                             <Setter Property="materialDesign:RippleAssist.Feedback" Value="LightGray" />
                             <Setter Property="materialDesign:RippleAssist.RippleOnTop" Value="True" />
                             <Setter Property="Margin" Value="0" />
@@ -124,9 +123,6 @@
                             <Setter Property="Height" Value="Auto" />
                             <Setter Property="Background" Value="{DynamicResource MaterialDesignPaper}" />
                             <Setter Property="Padding" Value="16" />
-                        </Style>
-                        <Style TargetType="Border">
-
                         </Style>
                     </Grid.Resources>
                     <Grid.RowDefinitions>
@@ -144,8 +140,11 @@
                                 <Style TargetType="Button" BasedOn="{StaticResource PaletteButton}">
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ActiveScheme}" Value="Primary">
-                                            <Setter Property="materialDesign:ShadowAdornerAssist.ShadowDepth" Value="Depth5" />
+                                            <Setter Property="materialDesign:ShadowAdornerAssist.ShadowDepth" Value="Depth3" />
                                         </DataTrigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="materialDesign:ShadowAdornerAssist.ShadowDepth" Value="Depth5" />
+                                        </Trigger>
                                     </Style.Triggers>
                                 </Style>
                             </Button.Style>
@@ -215,8 +214,11 @@
                                 <Style TargetType="Button" BasedOn="{StaticResource PaletteButton}">
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ActiveScheme}" Value="Secondary">
-                                            <Setter Property="materialDesign:ShadowAdornerAssist.ShadowDepth" Value="Depth5" />
+                                            <Setter Property="materialDesign:ShadowAdornerAssist.ShadowDepth" Value="Depth3" />
                                         </DataTrigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="materialDesign:ShadowAdornerAssist.ShadowDepth" Value="Depth5" />
+                                        </Trigger>
                                     </Style.Triggers>
                                 </Style>
                             </Button.Style>
@@ -287,8 +289,11 @@
                                     <Style TargetType="Button" BasedOn="{StaticResource PaletteButton}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ActiveScheme}" Value="PrimaryForeground">
-                                                <Setter Property="materialDesign:ShadowAdornerAssist.ShadowDepth" Value="Depth5" />
+                                                <Setter Property="materialDesign:ShadowAdornerAssist.ShadowDepth" Value="Depth3" />
                                             </DataTrigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="materialDesign:ShadowAdornerAssist.ShadowDepth" Value="Depth5" />
+                                            </Trigger>
                                         </Style.Triggers>
                                     </Style>
                                 </Button.Style>
@@ -340,8 +345,11 @@
                                     <Style TargetType="Button" BasedOn="{StaticResource PaletteButton}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ActiveScheme}" Value="SecondaryForeground">
-                                                <Setter Property="materialDesign:ShadowAdornerAssist.ShadowDepth" Value="Depth5" />
+                                                <Setter Property="materialDesign:ShadowAdornerAssist.ShadowDepth" Value="Depth3" />
                                             </DataTrigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="materialDesign:ShadowAdornerAssist.ShadowDepth" Value="Depth5" />
+                                            </Trigger>
                                         </Style.Triggers>
                                     </Style>
                                 </Button.Style>

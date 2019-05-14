@@ -21,7 +21,7 @@ namespace MaterialDesignThemes.Wpf
 
         private static void ShadowDepthProprtyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            UpdateShadowDepth((UIElement)d, (ShadowDepth)e.NewValue);
+            UpdateShadowDepth((FrameworkElement)d, (ShadowDepth)e.NewValue);
         }
 
         public static DependencyProperty ShadowAdornerProperty = DependencyProperty.RegisterAttached("ShadowAdorner", typeof(ShadowAdorner), typeof(ShadowAdornerAssist));
@@ -36,9 +36,9 @@ namespace MaterialDesignThemes.Wpf
             obj.SetValue(ShadowAdornerProperty, value);
         }
 
-        private static void UpdateShadowDepth(UIElement element, ShadowDepth shadowDepth, bool loaded = false)
+        private static void UpdateShadowDepth(FrameworkElement element, ShadowDepth shadowDepth, bool loaded = false)
         {
-            var adornerLayer = AdornerLayer.GetAdornerLayer(element);
+            var adornerLayer = GetTopMostAdornerLayer(element);
 
             if (adornerLayer == null)
             {
@@ -72,6 +72,17 @@ namespace MaterialDesignThemes.Wpf
                     MaterialDesignThemes.Wpf.ShadowAssist.SetShadowDepth(shadowAdorner.Shadow, shadowDepth);
                 }
             }
+        }
+
+        private static AdornerLayer GetTopMostAdornerLayer(FrameworkElement element)
+        {
+            AdornerLayer adornerLayer = null;
+            while(element != null)
+            {
+                adornerLayer = AdornerLayer.GetAdornerLayer(element) ?? adornerLayer;
+                element = element.Parent as FrameworkElement;
+            }
+            return adornerLayer;
         }
     }
 }
