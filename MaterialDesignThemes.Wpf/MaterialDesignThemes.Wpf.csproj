@@ -309,6 +309,7 @@
     <Compile Include="Converters\NotZeroToVisibilityConverter.cs" />
     <Compile Include="Converters\PointValueConverter.cs" />
     <Compile Include="Converters\ShadowConverter.cs" />
+    <Compile Include="Converters\ShadowCutOutConverter.cs" />
     <Compile Include="Converters\ShadowEdgeConverter.cs" />
     <Compile Include="Converters\ShadowInfo.cs" />
     <Compile Include="Converters\SizeToRectConverter.cs" />
@@ -346,6 +347,7 @@
     <Compile Include="ResourceDictionaryExtensions.cs" />
     <Compile Include="MaterialDesignLightTheme.cs" />
     <Compile Include="MaterialDesignDarkTheme.cs" />
+    <Compile Include="Shadow.cs" />
     <Compile Include="ThemeChangedEventArgs.cs" />
     <Compile Include="ThemeMarkupExtension.cs" />
     <Compile Include="MessageQueueExtension.cs" />
